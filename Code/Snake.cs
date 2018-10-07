@@ -33,53 +33,56 @@ namespace SnakeGame.Code
         /// </summary>
         /// <param name="speed"></param>
         /// /// <param name="direction"></param>
-        public static void run(int speed, string direction)
+        public static void run(int speed, string direction, bool runAble)
         {
             int lat;
             int log;
-            switch (direction)
+            if (runAble)
             {
-                case "right":
-                    {
-                        lat = 1;
-                        log = 0;
-                        break;
-                    }
-                case "left":
-                    {
-                        lat = -1;
-                        log = 0;
-                        break;
-                    }
-                case "up":
-                    {
-                        lat = 0;
-                        log = 1;
-                        break;
-                    }
-                case "down":
-                    {
-                        lat = 0;
-                        log = -1;
-                        break;
-                    }
-                default :
-                    {
-                        lat = 1;
-                        log = 0;
-                        break;
-                    }
+                switch (direction)
+                {
+                    case "right":
+                        {
+                            lat = 1;
+                            log = 0;
+                            break;
+                        }
+                    case "left":
+                        {
+                            lat = -1;
+                            log = 0;
+                            break;
+                        }
+                    case "up":
+                        {
+                            lat = 0;
+                            log = -1;
+                            break;
+                        }
+                    case "down":
+                        {
+                            lat = 0;
+                            log = 1;
+                            break;
+                        }
+                    default:
+                        {
+                            lat = 1;
+                            log = 0;
+                            break;
+                        }
+                }
+                firstPs = new Position();
+                firstPs.lat = snakePosition.First().lat >= 119 ? 1 : snakePosition.First().lat <= 0 ? 118 : snakePosition.First().lat + lat;
+                firstPs.log = snakePosition.First().log >= 27 ? 1 : snakePosition.First().log <= 0 ? 26 : snakePosition.First().log + log;
+                snakePosition.Insert(0, firstPs);
+                Console.SetCursorPosition(firstPs.lat, firstPs.log);
+                Console.Write(0);
+                Console.SetCursorPosition(snakePosition.Last().lat, snakePosition.Last().log);
+                Console.Write(" ");
+                snakePosition.RemoveAt(snakePosition.Count - 1);
+                Thread.Sleep(speed);
             }
-            firstPs = new Position();
-            firstPs.lat = snakePosition.First().lat >= 119 ? 1 : snakePosition.First().lat <= 0 ? 118 : snakePosition.First().lat + lat;
-            firstPs.log = snakePosition.First().log >= 27 ? 1 : snakePosition.First().log <= 0 ? 26 : snakePosition.First().log + log;
-            snakePosition.Insert(0, firstPs);
-            Console.SetCursorPosition(firstPs.lat, firstPs.log);
-            Console.Write(0);
-            Console.SetCursorPosition(snakePosition.Last().lat , snakePosition.Last().log);
-            Console.Write(" ");
-            snakePosition.RemoveAt(snakePosition.Count - 1);
-            Thread.Sleep(speed);
         }
     }
 }
