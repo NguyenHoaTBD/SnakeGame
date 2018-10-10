@@ -16,6 +16,7 @@ namespace SnakeGame
     {
         static int interval = 1;
         static string direction = "right";
+        static string OldDirection = "right";
         static bool start = false;
         static void ListenKey()
         {
@@ -27,22 +28,39 @@ namespace SnakeGame
                     {
                         case ConsoleKey.UpArrow:
                             {
-                                direction = "up";
+                                if(OldDirection != "down")
+                                {
+                                    direction = "up";
+                                    OldDirection = "up";
+                                }
                                 break;
                             }
                         case ConsoleKey.DownArrow:
                             {
-                                direction = "down";
+                                if (OldDirection != "up")
+                                {
+                                    direction = "down";
+                                    OldDirection = "down";
+                                }
+                                    
                                 break;
                             }
                         case ConsoleKey.LeftArrow:
                             {
-                                direction = "left";
+                                if (OldDirection != "right")
+                                {
+                                    direction = "left";
+                                    OldDirection = "left";
+                                }    
                                 break;
                             }
                         case ConsoleKey.RightArrow:
                             {
-                                direction = "right";
+                                if (OldDirection != "left")
+                                {
+                                    direction = "right";
+                                    OldDirection = "right";
+                                }
                                 break;
                             }
                         case ConsoleKey.Enter:
@@ -50,7 +68,7 @@ namespace SnakeGame
                                 start = !start;
                                 break;
                             }
-
+                            
                     }
                 }
             });
@@ -68,16 +86,15 @@ namespace SnakeGame
             int speed = 9;
            
             BackGround.BgrkFirst(height); //create background
-            ListenKey();
-            //control
 
+            //control
+            ListenKey();
 
             //make the snake
-            Position pos = new Position() { lat = 40, log = 15 };
-            Code.Snake WhiteSnake = new Code.Snake(7, speed, ConsoleColor.Green, pos);
+            Code.Snake WhiteSnake = new Code.Snake(7, speed, ConsoleColor.Green, new Position() { lat = 40, log = 15 });
             while (true)
             {
-                Code.Snake.run(200, direction, start);
+               Code.Snake.Run(200, direction, start);
             }
 
         }
